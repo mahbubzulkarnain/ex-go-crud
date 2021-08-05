@@ -1,11 +1,11 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gomodul/fn"
 	"github.com/mahbubzulkarnain/ex-go-crud/config"
 	"github.com/mahbubzulkarnain/ex-go-crud/delivery/pb"
@@ -15,11 +15,19 @@ import (
 )
 
 func main() {
-	db, _, err := sqlmock.New()
+	db, err := sql.Open(config.DB.MySQL.DriverName, config.DB.MySQL.DataSourceName)
 	if err != nil {
 		panic(err)
 	}
 	defer fn.Check(db.Close)
+
+	db.SetMaxIdleConns(config.DB.MySQL.MaxIdleConns)
+	db.SetMaxOpenConns(config.DB.MySQL.MaxOpenConns)
+	db.SetConnMaxLifetime(config.DB.MySQL.ConnMaxLifetime)
+
+	if err = db.Ping(); err != nil {
+		panic(err)
+	}
 
 	repo := repository.New(db)
 	srv := service.New(db, repo)

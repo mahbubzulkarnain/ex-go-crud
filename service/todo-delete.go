@@ -2,10 +2,13 @@ package service
 
 import (
 	"context"
-	"log"
 )
 
-func (s service) TodoDelete(ctx context.Context, id int64) (int64, error) {
-	log.Println("TodoDelete", id)
-	return 1, nil
+// TodoDelete godoc.
+func (s service) TodoDelete(ctx context.Context, todoID int64) (rowsAffected int64, err error) {
+	todoDelete, err := s.repo.TodoDelete(ctx, todoID)
+	if err != nil {
+		return 0, err
+	}
+	return todoDelete.RowsAffected()
 }

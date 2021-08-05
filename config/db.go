@@ -7,7 +7,7 @@ import (
 	"github.com/gomodul/envy"
 )
 
-type databaseItem struct {
+type dbItem struct {
 	DriverName      string
 	DataSourceName  string
 	MaxIdleConns    int
@@ -15,12 +15,12 @@ type databaseItem struct {
 	ConnMaxLifetime time.Duration
 }
 
-type database struct {
-	MySQL databaseItem
+type db struct {
+	MySQL dbItem
 }
 
-var DB = database{
-	MySQL: databaseItem{
+var DB = db{
+	MySQL: dbItem{
 		DriverName: "mysql",
 		DataSourceName: fmt.Sprintf(
 			"%v:%v@tcp(%v:%v)/%v?parseTime=true&charset=utf8",

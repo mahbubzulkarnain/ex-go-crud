@@ -8,12 +8,13 @@ import (
 	"github.com/mahbubzulkarnain/ex-go-crud/repository"
 )
 
+// Service godoc.
 type Service interface {
 	TodoList(ctx context.Context) ([]*model.Todo, error)
-	TodoCreate(ctx context.Context, todo model.Todo) (int64, error)
-	TodoRead(ctx context.Context, id int64) (*model.Todo, error)
-	TodoUpdate(ctx context.Context, todo model.Todo) (int64, error)
-	TodoDelete(ctx context.Context, id int64) (int64, error)
+	TodoCreate(ctx context.Context, todo model.Todo) (lastInsertId int64, err error)
+	TodoRead(ctx context.Context, todoID int64) (model.Todo, error)
+	TodoUpdate(ctx context.Context, todo model.Todo) (rowsAffected int64, err error)
+	TodoDelete(ctx context.Context, todoID int64) (rowsAffected int64, err error)
 }
 
 type service struct {
@@ -21,6 +22,7 @@ type service struct {
 	repo *repository.Queries
 }
 
+// New godoc.
 func New(db *sql.DB, repo *repository.Queries) Service {
 	return &service{db: db, repo: repo}
 }

@@ -7,23 +7,53 @@ option go_package = "delivery/pb";
 message Empty {}
 
 message Todo {
-    int64 id = 1;
-    string title = 2;
-    string description = 3;
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
 }
 
 message Todos {
-    repeated Todo todos = 1;
+  repeated Todo todos = 1;
 }
 
-message TodoId {
-    int64 id = 1;
+message CreateRequest {
+  Todo todo = 1;
+}
+
+message CreateResponse{
+  Todo todo = 1;
+}
+
+message ReadRequest {
+  int64 id = 1;
+}
+
+message ReadResponse {
+  Todo todo = 1;
+}
+
+message UpdateRequest {
+  Todo todo = 1;
+}
+
+message UpdateResponse {
+  int64 id = 1;
+  int64 rows_affected = 2;
+}
+
+message DeleteRequest {
+  int64 id = 1;
+}
+
+message DeleteResponse {
+  int64 id = 1;
+  int64 rows_affected = 2;
 }
 
 service TodoService {
-    rpc Create(Todo) returns (TodoId) {}
-    rpc Read(TodoId) returns (Todo) {}
-    rpc Update(Todo) returns (TodoId) {}
-    rpc Delete(TodoId) returns (TodoId) {}
-    rpc List(Empty) returns (Todos) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc List(Empty) returns (Todos) {}
 }

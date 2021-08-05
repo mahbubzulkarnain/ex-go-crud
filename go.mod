@@ -3,9 +3,7 @@ module github.com/mahbubzulkarnain/ex-go-crud
 go 1.16
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.5.0
-	github.com/bxcodec/faker/v3 v3.6.0
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.2
 	github.com/gomodul/envy v0.0.0-20210710030154-ffbea1474775
 	github.com/gomodul/fn v0.2.0-alpha
 	github.com/google/go-cmp v0.5.6 // indirect
